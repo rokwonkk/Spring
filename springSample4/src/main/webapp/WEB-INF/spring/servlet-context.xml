@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		
+	<!-- spring (기본)설정 -->
+	
+	<!-- spring MVC annotation(주석문, 지시문)을 사용하기 위한 (허가)설정 -->
+	<context:annotation-config/>
+	
+	<!-- view(jsp, html) 파일들의 경로와 확장자명을 설정 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<!-- 
+		: bean : bean - 콩 객체 하나하나하나 위의 코드와 아래의 코드는 같다.
+		InternalResourceViewResolver viewresolver = new InternalResourceViewResolver();
+		viewresolver.prefix = "/WEB-INF/views/";
+		viewResolver.suffix = ".jsp";
+	 -->
+	
+	<!-- 공통패키지 -->
+	<context:component-scan base-package="ssg.com.a" />
+	
+	<!-- Ajax 사용허가 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	<!-- spring에서 처리할 수 없는 요청은 tomcat에서 처리 -->
+	<mvc:default-servlet-handler/>          
+</beans>

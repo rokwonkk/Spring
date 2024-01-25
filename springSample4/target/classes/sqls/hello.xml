@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Hello">
+
+<select id="allmember" resultType="ssg.com.a.dto.MemberDto">
+	select id, pw, name, email, auth from member
+</select>
+
+<select id="getmember" parameterType="java.lang.String" resultType="ssg.com.a.dto.MemberDto">
+	select * from member where id=#{id}
+</select>
+
+<select id="idcheck" parameterType="String" resultType="Integer">
+	select count(*) from member where id=#{id}
+</select>
+
+<select id="login" parameterType="ssg.com.a.dto.MemberDto" resultType="ssg.com.a.dto.MemberDto">
+	select id, pw, name, email, auth from member
+	where id=#{id} and pw=#{pw}
+</select>
+</mapper>
