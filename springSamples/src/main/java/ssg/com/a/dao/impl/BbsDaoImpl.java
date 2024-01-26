@@ -32,5 +32,24 @@ public class BbsDaoImpl implements BbsDao {
 	public int writebbs(BbsDto dto) {
 		return session.insert(ns + "bbswrite", dto);
 	}
+
+	@Override
+	public BbsDto getbbs(int seq) {
+		return session.selectOne(ns + "getbbs", seq);
+	}
+
+	@Override
+	public int bbsupdate(BbsDto dto) {
+		return session.update(ns + "bbsupdate", dto);
+	}
+
+	@Override
+	public int bbsdelete(int seq) {
+		return session.update(ns + "bbsdelete", seq);
+	}
 	
+	@Override
+	public void readcount(int seq) {
+		session.update(ns + "readcount", seq);
+	}
 }

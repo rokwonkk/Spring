@@ -90,7 +90,7 @@ if(bbsupdateMsg != null && bbsupdateMsg.equals("") == false){
 		%>
 		<script type="text/javascript">
 		alert("글이 성공적으로 수정되었습니다");
-		location.href = "./bbs?param=bbslist";
+		location.href = "bbslist.do";
 		</script>
 		<%
 	}else{
@@ -98,7 +98,7 @@ if(bbsupdateMsg != null && bbsupdateMsg.equals("") == false){
 		%>
 		<script type="text/javascript">
 		alert("글을 다시 수정해 주십시오");
-		location.href = "./bbs?param=bbsupdate&seq=" + <%=seq %>;
+		location.href = "bbsupdate.do?seq=" + <%=seq %>;
 		</script>
 		<%
 	}
@@ -110,7 +110,7 @@ if(bbsdeleteMsg != null && bbsdeleteMsg.equals("") == false){
 		%>
 		<script type="text/javascript">
 		alert("글이 성공적으로 삭제되었습니다");
-		location.href = "./bbs?param=bbslist";
+		location.href = "bbslist.do";
 		</script>
 		<%
 	}else{
@@ -118,7 +118,7 @@ if(bbsdeleteMsg != null && bbsdeleteMsg.equals("") == false){
 		%>
 		<script type="text/javascript">
 		alert("글이 삭제되지 않았습니다");
-		location.href = "./bbs?param=bbsdetail&seq=" + <%=seq %>;
+		location.href = "bbslist.do?seq=" + <%=seq %>;
 		</script>
 		<%
 	}	

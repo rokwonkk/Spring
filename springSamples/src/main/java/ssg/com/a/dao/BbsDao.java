@@ -12,4 +12,12 @@ public interface BbsDao {
 	int allbbs(BbsParam param);
 	
 	int writebbs(BbsDto dto);
+	
+	BbsDto getbbs(int seq);
+	
+	int bbsupdate(BbsDto dto);
+	
+	int bbsdelete(int seq);
+	
+	void readcount(int seq);
 }

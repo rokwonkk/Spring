@@ -13,4 +13,11 @@ public interface BbsService {
 	
 	int writebbs(BbsDto dto);
 	
+	BbsDto getbbs(int seq);
+	
+	boolean bbsupdate(BbsDto dto);
+	
+	boolean bbsdelete(int seq);
+	
+	void readcount(int seq);
 }

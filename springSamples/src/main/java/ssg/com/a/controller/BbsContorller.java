@@ -3,6 +3,8 @@ package ssg.com.a.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,18 +56,85 @@ public class BbsContorller {
 	}
 	
 	@PostMapping("bbswriteAf.do")
-	public String postMethodName(BbsDto dto,Model model) {
-		System.out.println("BbcContorller bbsWriteAf" + new Date());
+	public String bbswriteAf(BbsDto dto, Model model) {
+		System.out.println("BbcContorller bbsWriteAf " + new Date());
 		
 		int b = service.writebbs(dto);
-		String regiMsg = "MEMBER_YES";
+		String bbswriteMsg = "BBSWRITE_SUCCESS";
 		if(b == 0) {
-			regiMsg = "MEMBER_NO";
+			bbswriteMsg = "BBSWRITE_FAIL";
 		}
 		
-		model.addAttribute("regiMsg", regiMsg);
+		model.addAttribute("bbswriteMsg", bbswriteMsg);
 		
 		return "message";
 	}
 	
+	@GetMapping("bbsdetail.do")
+	public String bbsDetail(HttpServletRequest req, Model model) {
+		System.out.println("BbcContorller bbsDetail " + new Date());
+		
+		int seq = Integer.parseInt(req.getParameter("seq"));
+		
+		//접속한 이력을 조사 !참고!
+        //조회수 증가
+        service.readcount(seq);
+		
+		BbsDto dto = service.getbbs(seq);
+		
+		model.addAttribute("dto", dto);
+		
+		return "bbs/bbsdetail";
+	}
+	
+	@GetMapping("bbsupdate.do")
+	public String bbsUpdate(HttpServletRequest req, Model model) {
+		System.out.println("BbcContorller bbsUpdate " + new Date());
+
+		int seq = Integer.parseInt(req.getParameter("seq"));
+		
+		BbsDto dto = service.getbbs(seq);
+		
+		model.addAttribute("dto", dto);
+		
+		return "bbs/bbsupdate";
+	}
+	
+	@PostMapping("bbsupdateAf.do")
+	public String bbsUpdateAf(HttpServletRequest req, Model model) {
+		
+		int seq = Integer.parseInt(req.getParameter("seq"));
+		String title = req.getParameter("title");
+		String content = req.getParameter("content");
+		
+		BbsDto updateDto = new BbsDto(seq, title, content);
+		
+		boolean b = service.bbsupdate(updateDto);
+		
+		String bbsupdateMsg = "UPDATE_SUCCESS";
+        if (!b) {
+        	bbsupdateMsg = "UPDATE_FAIL";
+        }
+		
+        model.addAttribute("bbsupdateMsg", bbsupdateMsg);
+        
+		return "message";
+	}
+	
+	//데이터 수정이라 PostMapping을 사용하려 했으나. 폼이 아니라서 405애러를 봄. 처음봄.. ㅋㅋ POST로 보낸게 아니라서 GET으로만 되나봄.
+	@GetMapping("bbsdelete.do")
+	public String bbsDelete(HttpServletRequest req, Model model) {
+		int seq = Integer.parseInt(req.getParameter("seq"));
+
+		boolean b = service.bbsdelete(seq);
+		
+        String bbsdeleteMsg = "DELETE_SUCCESS";
+        if (!b) {
+        	bbsdeleteMsg = "DELETE_FAIL";
+        }
+		
+        model.addAttribute("bbsdeleteMsg", bbsdeleteMsg);
+        
+		return "message";
+	}
 }

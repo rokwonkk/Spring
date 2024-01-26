@@ -87,8 +87,19 @@
 				<tr>
 					<td><%=i + 1%></td>
 					<td style="text-align: left;">
-						<a href="bbsdetail.do?seq=<%=bbs.getSeq()%>"> <%=BbsUtil.arrow(bbs.getDepth())%>
+					<%=BbsUtil.arrow(bbs.getDepth())%>
+					<%
+						if(bbs.getDel() == 0){
+					%>
+						<a href="bbsdetail.do?seq=<%=bbs.getSeq()%>">
 								<%=BbsUtil.dot3(bbs.getTitle())%>
+					<%
+						} else {
+					%>
+						<font color="red"> ***** 이 글은 작성자의 의해서 삭제된 글 입니다. *****</font>
+					<%
+						}
+					%>
 						</a>
 					</td>
 					<td><%=bbs.getReadcount()%></td>

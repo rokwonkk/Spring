@@ -30,4 +30,28 @@ public class BbsServiceImpl implements BbsService {
 	public int writebbs(BbsDto dto) {
 		return dao.writebbs(dto);
 	}
+
+	@Override
+	public BbsDto getbbs(int seq) {
+		return dao.getbbs(seq);
+	}
+
+	@Override
+	public boolean bbsupdate(BbsDto dto) {
+		int count = dao.bbsupdate(dto);
+		return count > 0 ? true : false;
+	}
+	
+	@Override
+	public boolean bbsdelete(int seq) {
+		int count = dao.bbsdelete(seq);
+		return count > 0 ? true : false;
+	}
+	
+	@Override
+	public void readcount(int seq) {
+		dao.readcount(seq);
+	}
+
+
 }

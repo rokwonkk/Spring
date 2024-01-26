@@ -39,7 +39,30 @@
 
 <insert id="bbswrite" parameterType="ssg.com.a.dto.BbsDto">
 	insert into bbs(id, ref, step, depth, title, content, wdate, del, readcount)
-	values(#{id}, (select ifnull(max(#{ref}), 0) + 1 from bbs b), 0, 0, #{title}, #{content}, now(), 0, 0 )
+	values(#{id}, (select ifnull(max(ref), 0) + 1 from bbs b), 0, 0, #{title}, #{content}, now(), 0, 0 )
 </insert>
+
+<select id="getbbs" parameterType="Integer" resultType="ssg.com.a.dto.BbsDto">
+	select seq, id, ref, step, depth, title, content, wdate, del, readcount from bbs
+	where seq=#{seq}
+</select>
+
+<update id="readcount" parameterType="Integer">
+	update bbs
+	set readcount=readcount+1
+	where seq=#{seq}
+</update>
+
+<update id="bbsupdate" parameterType="ssg.com.a.dto.BbsDto">
+	update bbs
+	set title=#{title}, content=#{content}
+	where seq=#{seq}
+</update>
+
+<update id="bbsdelete" parameterType="Integer">
+	update bbs
+	set del=1
+	where seq=#{seq}
+</update>
 
 </mapper>
