@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원가입</title>
 <!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
@@ -29,7 +29,7 @@
 
 <div class="center">
 
-<form action="regiAf.do" method="post">
+<form action="regiAf.do" id="frm" method="post">
 <br/>
 <table class="table">
 <tr>
@@ -61,7 +61,7 @@
 <tr>
 	<td colspan="2">
 		<div align="center">
-			<input type="submit" class="btn btn-primary" value="회원가입">
+			<input type="button" id="regibtn" class="btn btn-primary" value="회원가입">
 		</div>
 	</td>
 </tr>
@@ -72,27 +72,35 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#id_chk_btn').click(function(){
-		// id 규칙 : 대소문자 포함 + 특수기호
 		
+		//빈칸검사
+		if($("#id").val() === ""){
+			alert("아이디를 기입해주세요.");
+			return;
+		}
+
 		// id 글자의 갯수 > ? 
+				
+		// id 규칙 : 대소문자 포함 + 특수기호 로그인API - ( 카카오API, 구글API, 네이버API )
 				
 		// id 가 사용중? 
 		$.ajax({
 			url : "./idcheck.do",
 			type : "get",
-			data : { id : $("#id").val() },
+			data : { 
+				"id" : $("#id").val()
+			},
 			success:function(str){
 				// alert("success");
-				if($("#id").val() === ""){
-					alert("아이디를 기입해주세요.");
-					return;
-				}
-			
 				if(str === "YES"){
-					alert("가입이 가능한 아이디입니다.");
+			/* 		alert("가입이 가능한 아이디입니다."); */
+					$("#idcheck").css("color","#0000ff");
+					$("#idcheck").text("사용할수 있는 아이디입니다.");
 					
 				} else {
-					alert("이미 가입이 되어있는 아이디입니다.");
+					/* alert("이미 가입이 되어있는 아이디입니다."); */
+					$("#idcheck").css("color","#ff0000");
+					$("#idcheck").text("사용중인 아이디입니다.");
 					$("#id").val("");
 				}
 			},
@@ -100,6 +108,16 @@ $(document).ready(function(){
 				alert("error");
 			}
 		});
+	});
+	
+	$("#regibtn").click(function(){
+		
+		// 빈칸검사
+		// id, pw, name
+		
+		
+		$("#frm").submit();
+		
 	});
 });
 </script>
