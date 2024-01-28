@@ -49,9 +49,14 @@ public class BbsServiceImpl implements BbsService {
 	}
 	
 	@Override
+	public boolean answerInsert(BbsDto dto) {
+		int count = dao.answerInsert(dto);
+		return count > 0 ? true : false;
+	}
+	
+	@Override
 	public void readcount(int seq) {
 		dao.readcount(seq);
 	}
-
 
 }

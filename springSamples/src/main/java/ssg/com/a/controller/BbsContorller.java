@@ -137,4 +137,37 @@ public class BbsContorller {
         
 		return "message";
 	}
+	
+	@GetMapping("answer.do")
+	public String answer(HttpServletRequest req, Model model) {
+		int seq = Integer.parseInt(req.getParameter("seq"));
+
+		BbsDto dto = service.getbbs(seq);
+		
+		model.addAttribute("dto", dto);
+		
+		return "bbs/answer";
+	}
+	
+	@PostMapping("answerAf.do")
+	public String answerAf(HttpServletRequest req, Model model) {
+		
+		int seq = Integer.parseInt(req.getParameter("seq"));
+		String id = req.getParameter("id");
+		String title = req.getParameter("title");
+		String content = req.getParameter("content");
+		
+		BbsDto answer = new BbsDto(seq, id, title, content);
+		
+		boolean b = service.answerInsert(answer);
+		
+		String answerMsg = "ANSWER_SUCCESS";
+        if (!b) {
+        	answerMsg = "ANSWER_FAIL";
+        }
+		
+        model.addAttribute("answerMsg", answerMsg);
+        
+		return "message";
+	}
 }

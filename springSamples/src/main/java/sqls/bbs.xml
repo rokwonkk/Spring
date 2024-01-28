@@ -65,4 +65,14 @@
 	where seq=#{seq}
 </update>
 
+<insert id="answerinsert" parameterType="ssg.com.a.dto.BbsDto">
+	insert into bbs( id, ref, step, depth, title, content, wdate, del, readcount)
+	values ( 
+	#{id}, 
+	(select ref from bbs a where seq=#{seq}),
+	(select step from bbs b where seq=#{seq}) + 1,
+	(select depth from bbs c where seq=#{seq}) + 1,
+	#{title}, #{content}, now(), 0, 0
+	)
+</insert>
 </mapper>

@@ -49,6 +49,11 @@ public class BbsDaoImpl implements BbsDao {
 	}
 	
 	@Override
+	public int answerInsert(BbsDto dto) {
+		return session.insert(ns + "answerinsert", dto);
+	}
+	
+	@Override
 	public void readcount(int seq) {
 		session.update(ns + "readcount", seq);
 	}

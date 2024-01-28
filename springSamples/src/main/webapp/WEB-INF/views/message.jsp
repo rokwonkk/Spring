@@ -69,7 +69,7 @@ if(answerMsg != null && answerMsg.equals("") == false){
 		%>
 		<script type="text/javascript">
 		alert("답글이 성공적으로 추가되었습니다");
-		location.href = "./bbs?param=bbslist";
+		location.href = "bbslist.do";
 		</script>
 		<%
 	}else{
@@ -77,7 +77,7 @@ if(answerMsg != null && answerMsg.equals("") == false){
 		%>
 		<script type="text/javascript">
 		alert("답글을 다시 작성해 주십시오");
-		location.href = "./bbs?param=answer&seq=" + seq;
+		location.href = "answer.do?seq=" + seq;
 		</script>
 		<%
 	}

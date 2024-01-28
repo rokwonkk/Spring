@@ -19,5 +19,7 @@ public interface BbsDao {
 	
 	int bbsdelete(int seq);
 	
+	int answerInsert(BbsDto dto);
+	
 	void readcount(int seq);
 }
