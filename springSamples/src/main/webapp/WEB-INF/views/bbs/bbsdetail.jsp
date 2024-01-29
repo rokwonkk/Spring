@@ -24,12 +24,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        body {
-            padding: 40px;
-        }
 
+	<!-- Jquery 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- 섬머노트 추가 -->
+    <script src="./js/summernote-lite.js"></script>
+	<script src="./js/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="./css/summernote-lite.css">
+    
+    <style>
         .mytable {
+        	margin: auto;
             width: 800px;
             border: 1px solid lightgray;
         }
@@ -38,10 +44,14 @@
             border: 1px solid lightgray;
             text-align: center;
             vertical-align: middle;
+       		
+       		--bs-table-color: white;
+   			--bs-table-bg: royalblue;
         }
 
         button {
-            margin: 0 80px;
+        	align: right;
+            /* margin: 0 80px; */
         }
     </style>
 </head>
@@ -69,13 +79,13 @@
             </td>
         </tr>
         <tr>
-            <th>제목</th>
-            <td><%=dto.getTitle()%>
+            <!-- <th>제목</th> -->
+            <td colspan="2"><%=dto.getTitle()%>
             </td>
         </tr>
         <tr>
-            <th>내용</th>
-            <td><textarea name="content" class="form-control" cols="50" rows="10"
+            <!-- <th>내용</th> -->
+            <td colspan="2"><textarea name="content" class="form-control" cols="50" rows="10"
                           readonly><%=dto.getContent()%></textarea>
             </td>
         </tr>
@@ -90,9 +100,79 @@
         }
     %>
     <button type="button" onclick="answerBbs(<%=dto.getSeq()%>)" class="btn btn-primary">답글작성</button>
+<%--     <button type="button" onclick="commentBbs(<%=dto.getSeq()%>)" class="btn btn-primary">댓글작성</button> --%>
+	<button type="button" class="btn btn-primary" onclick="returnlist()">글목록으로</button>
+
 </div>
 
+<%-- 댓글 --%>
+	<div id="app" class="container">
+
+		<form action="bbsCommentWriteAf.do" method="post">
+			<input type="hidden" name="seq" value="<%=dto.getSeq()%>"> 
+			<input type="hidden" name="id" value="<%=login.getId()%>">
+
+			<table>
+				<col width="1500px" />
+				<col width="150px" />
+
+				<tr>
+					<td>comment</td>
+					<td style="padding-left: 30px;">올리기</td>
+				</tr>
+				<tr>
+					<td><textarea rows="3" class="form-control" name="content"></textarea>
+					</td>
+					<td style="padding-left: 30px">
+						<button type="submit" class='btn btn-primary btn-block p-4'>작성완료</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+		<br/><br/>
+		
+		<table class="table table-sm">
+		<col width="500"/><col width="500"/>
+		
+		<tbody id="tbody"></tbody>
+		</table>
+		
+	</div>
+
+	<br/>
+
 <br/>
+
+<script>
+$(document).ready(function(){
+	$.ajax({
+		url : "commentList.do",
+		type : "get",
+		data : { seq : <%=dto.getSeq()%> },
+		success : function( data ){
+			//alert("ok");
+			$.each(data, function (i, item){
+				let str = "<tr class='table-info'>"
+					str +=	 "<td>작성자:" + item.id + "</td>";
+					str +=	 "<td>작성일:" + item.wdate + "</td>";
+					str += "</tr>";
+					str += "<tr>";
+					str += 	"<td colspan='2'>" + item.content + "</td>";
+					str += "</tr>";
+					str += "<tr>";
+					str += 	"<td colspan='2'>&nbsp;</td>";
+					str += "</tr>";
+					
+					$('#tbody').append(str);
+			});
+		},
+		error : function(){
+			alert("TT");
+		}
+	});
+});
+</script>
 
 <script>
     function updateBbs(seq){
@@ -111,6 +191,14 @@
     function answerBbs(seq) {
         location.href = "answer.do?seq=" + seq;
     }
+    
+    function commentBbs(seq){
+    	alert("commentBbs");
+    }
+    
+	function returnlist() {
+		location.href = "bbslist.do";
+	}
 </script>
 </body>
 </html>

@@ -65,6 +65,8 @@
 	where seq=#{seq}
 </update>
 
+<!-- 답글 -->
+
 <insert id="answerinsert" parameterType="ssg.com.a.dto.BbsDto">
 	insert into bbs( id, ref, step, depth, title, content, wdate, del, readcount)
 	values ( 
@@ -75,4 +77,18 @@
 	#{title}, #{content}, now(), 0, 0
 	)
 </insert>
+
+<!-- 댓글 -->
+<!-- 댓글 추가 -->
+<insert id="commentwrite" parameterType="ssg.com.a.dto.BbsComment">
+	insert into bbscomment(seq, id, content, wdate) values (#{seq}, #{id}, #{content}, now())
+</insert>
+
+<!-- 댓글 목록 -->
+<select id="commentlist" parameterType="Integer" resultType="ssg.com.a.dto.BbsComment">
+	select seq, id, content, wdate from bbscomment
+	where seq=#{seq}
+	order by wdate desc
+</select>
+
 </mapper>

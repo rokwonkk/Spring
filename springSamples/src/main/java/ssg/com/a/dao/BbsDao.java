@@ -2,6 +2,7 @@ package ssg.com.a.dao;
 
 import java.util.List;
 
+import ssg.com.a.dto.BbsComment;
 import ssg.com.a.dto.BbsDto;
 import ssg.com.a.dto.BbsParam;
 
@@ -20,6 +21,10 @@ public interface BbsDao {
 	int bbsdelete(int seq);
 	
 	int answerInsert(BbsDto dto);
+	
+	int commentWrite(BbsComment dto);
+	
+	List<BbsComment> commentlist(int seq);
 	
 	void readcount(int seq);
 }

@@ -36,6 +36,11 @@
 	
 	<!-- pagination에서 필요한 js 추가 -->
 	<script type="text/javascript" src="./js/jquery.twbsPagination.min.js"></script>
+	
+    <!-- 섬머노트 추가 -->
+    <script src="./js/summernote-lite.js"></script>
+	<script src="./js/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="./css/summernote-lite.css">
   
 	<style type="text/css">
 	.center {
@@ -44,7 +49,7 @@
 		text-align: center;
 	}
 	th {
-		background: lightblue;
+		background: royalblue;
 		color: white;
 	}
 	tr {
@@ -171,8 +176,11 @@
 			initiateStartPageClick : false, //처음 실행시에 자동실행이 되지 않도록 하는 옵션
 			onPageClick : function(event, page) {
 				/* alert(page); */
-				/* location.href = "bbslist.do?choice=" + choice + "&search=" + search + "&pageNumber=" + (page-1); */
-				location.href = "bbslist.do?pageNumber=" + (page - 1);
+				let choice = document.getElementById("choice").value;
+				let search = document.getElementById("search").value;
+				
+				location.href = "bbslist.do?choice=" + choice + "&search=" + search + "&pageNumber=" + (page-1);
+				/* location.href = "bbslist.do?pageNumber=" + (page - 1); */
 			}
 		});
 	</script>

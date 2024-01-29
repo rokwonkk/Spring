@@ -93,7 +93,7 @@
             </tr>
             <tr>
                 <th>제목</th>
-                <td><input type="text" class="form-control" name="title" size="50px"></td>
+                <td><input type="text" class="form-control" name="title" size="50px" placeholder="제목을 작성해주세요"></td>
             </tr>
             <tr>
                 <th>내용</th>

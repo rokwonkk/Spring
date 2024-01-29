@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import ssg.com.a.dto.BbsComment;
 import ssg.com.a.dto.BbsDto;
 import ssg.com.a.dto.BbsParam;
 import ssg.com.a.service.BbsService;
@@ -59,22 +61,26 @@ public class BbsContorller {
 	public String bbswriteAf(BbsDto dto, Model model) {
 		System.out.println("BbcContorller bbsWriteAf " + new Date());
 		
-		int b = service.writebbs(dto);
+		boolean b = service.writebbs(dto);
 		String bbswriteMsg = "BBSWRITE_SUCCESS";
-		if(b == 0) {
+		if(!b) {
 			bbswriteMsg = "BBSWRITE_FAIL";
 		}
 		
 		model.addAttribute("bbswriteMsg", bbswriteMsg);
 		
 		return "message";
+		
+		//Controller에서 controller 이동
+		//redirect == sendRedirect
+		//return "redirect:/bbslist.do";
 	}
 	
 	@GetMapping("bbsdetail.do")
-	public String bbsDetail(HttpServletRequest req, Model model) {
+	public String bbsDetail(int seq, Model model) {
 		System.out.println("BbcContorller bbsDetail " + new Date());
 		
-		int seq = Integer.parseInt(req.getParameter("seq"));
+//		int seq = Integer.parseInt(req.getParameter("seq"));
 		
 		//접속한 이력을 조사 !참고!
         //조회수 증가
@@ -102,7 +108,8 @@ public class BbsContorller {
 	
 	@PostMapping("bbsupdateAf.do")
 	public String bbsUpdateAf(HttpServletRequest req, Model model) {
-		
+		System.out.println("BbcContorller bbsUpdateAf " + new Date());
+
 		int seq = Integer.parseInt(req.getParameter("seq"));
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
@@ -124,6 +131,9 @@ public class BbsContorller {
 	//데이터 수정이라 PostMapping을 사용하려 했으나. 폼이 아니라서 405애러를 봄. 처음봄.. ㅋㅋ POST로 보낸게 아니라서 GET으로만 되나봄.
 	@GetMapping("bbsdelete.do")
 	public String bbsDelete(HttpServletRequest req, Model model) {
+		System.out.println("BbcContorller bbsDelete " + new Date());
+
+		
 		int seq = Integer.parseInt(req.getParameter("seq"));
 
 		boolean b = service.bbsdelete(seq);
@@ -151,8 +161,10 @@ public class BbsContorller {
 	
 	@PostMapping("answerAf.do")
 	public String answerAf(HttpServletRequest req, Model model) {
-		
+		System.out.println("BbcContorller answerAf " + new Date());
+
 		int seq = Integer.parseInt(req.getParameter("seq"));
+		
 		String id = req.getParameter("id");
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
@@ -169,5 +181,29 @@ public class BbsContorller {
         model.addAttribute("answerMsg", answerMsg);
         
 		return "message";
+	}
+	
+	@PostMapping("bbsCommentWriteAf.do")
+	public String CommentWriteAf(BbsComment com) {
+		System.out.println("BbcContorller CommentWriteAf " + new Date());
+	
+		boolean b = service.commentWrite(com);
+		
+		if(b) {
+			System.out.println("댓글작성 성공");
+		} else {
+			System.out.println("댓글작성 실패");
+		}
+		
+		return "redirect:/bbsdetail.do?seq=" + com.getSeq();
+	}
+	
+	@ResponseBody
+	@GetMapping("commentList.do")
+	public List<BbsComment> commentList(int seq){
+		System.out.println("BbcContorller commentList " + new Date());
+		
+		List<BbsComment> list = service.commentlist(seq);
+		return list;
 	}
 }

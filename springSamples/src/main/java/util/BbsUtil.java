@@ -18,7 +18,7 @@ public class BbsUtil {
 
 	// 답글의 화살표와 공백을 추가하는 함수
 	public static String arrow(int depth){
-	String rs = "<img src='./images/arrow.png' width='20px' height='20px'/>";
+	String rs = "<img src='./images/arrow.png' width='8px' height='8px'/>";
 	String nbsp = "&nbsp;&nbsp;&nbsp;&nbsp;";
 
 	String ts = ""; // 공백에 따라서

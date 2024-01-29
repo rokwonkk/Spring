@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ssg.com.a.dao.BbsDao;
+import ssg.com.a.dto.BbsComment;
 import ssg.com.a.dto.BbsDto;
 import ssg.com.a.dto.BbsParam;
 
@@ -30,7 +31,8 @@ public class BbsDaoImpl implements BbsDao {
 
 	@Override
 	public int writebbs(BbsDto dto) {
-		return session.insert(ns + "bbswrite", dto);
+		int count = session.insert(ns + "bbswrite", dto);
+		return count;
 	}
 
 	@Override
@@ -56,5 +58,15 @@ public class BbsDaoImpl implements BbsDao {
 	@Override
 	public void readcount(int seq) {
 		session.update(ns + "readcount", seq);
+	}
+
+	@Override
+	public int commentWrite(BbsComment dto) {
+		return session.update(ns + "commentwrite", dto);
+	}
+	
+	@Override
+	public List<BbsComment> commentlist(int seq) {
+		return session.selectList(ns + "commentlist", seq);
 	}
 }
