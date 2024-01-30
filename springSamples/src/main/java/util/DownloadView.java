@@ -9,10 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.view.AbstractView;
 
 import ssg.com.a.service.PdsService;
@@ -55,15 +53,14 @@ public class DownloadView extends AbstractView {
 		// 실제로 파일에 기입하는 처리
 		FileCopyUtils.copy(fis, os);
 		
-		service.downloadCount(seq);
-		
+
+		// AbstractView(가상뷰) extends를 해서 service주입 받으려고하니
+		// NullPointerException 뜸..
+		// 알아보니 spring의 빈 주입 순서와 관련이 있는 듯함.
+		// 직접 ApplicationContext를 통해 관련 서비스 빈을 가져오려고 했으나 그것도 실패함.
+		// 그래서 결국 파일 만들어 질때 아닌 파일 만들어 지기전에 카운트를 올리는 것으로 수정함.
 		// download 회수를 증가
-//		boolean b = service.downloadCount(seq);
-//		if(b) {
-//			System.out.println("다운로드 카운트 증가");
-//		} else {
-//			System.out.println("다운로드 카운트 증가 실패");
-//		}
+//		service.downloadCount(seq);
 		
 		if(fis != null) {
 			fis.close();

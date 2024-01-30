@@ -121,6 +121,9 @@ public class PdsController {
 		model.addAttribute("filename", filename);
 		model.addAttribute("seq", seq);
 		
+		//다운로드 카운트 증가
+		service.downloadCount(seq);
+		
 		return "downloadView";
 	}
 }

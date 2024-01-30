@@ -51,7 +51,7 @@
 			<tr>
 				<th>내용</th>
 				<td>
-					<textarea rows="5" cols="50"><%=dto.getContent() %></textarea>
+					<textarea rows="5" cols="50" readonly><%=dto.getContent() %></textarea>
 				</td>
 			</tr>
 			
