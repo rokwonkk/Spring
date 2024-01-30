@@ -52,15 +52,12 @@ public class DownloadView extends AbstractView {
 		
 		// 실제로 파일에 기입하는 처리
 		FileCopyUtils.copy(fis, os);
-		
 
 		// AbstractView(가상뷰) extends를 해서 service주입 받으려고하니
 		// NullPointerException 뜸..
 		// 알아보니 spring의 빈 주입 순서와 관련이 있는 듯함.
 		// 직접 ApplicationContext를 통해 관련 서비스 빈을 가져오려고 했으나 그것도 실패함.
 		// 그래서 결국 파일 만들어 질때 아닌 파일 만들어 지기전에 카운트를 올리는 것으로 수정함.
-		// download 회수를 증가
-//		service.downloadCount(seq);
 		
 		if(fis != null) {
 			fis.close();
