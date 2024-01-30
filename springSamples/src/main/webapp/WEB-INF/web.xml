@@ -35,6 +35,7 @@
   	<param-name>contextConfigLocation</param-name>
   	<param-value>
   		/WEB-INF/spring/applicationContext.xml
+  		/WEB-INF/spring/file-context.xml
   	</param-value>  
   </context-param>
 

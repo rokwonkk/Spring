@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Pds">
+
+<select id="pdslist" resultType="ssg.com.a.dto.PdsDto">
+	select seq, id, title, content, filename, newfilename, readcount, downcount, regdate from pds
+	order by regdate desc;
+</select>
+
+<insert id="pdsupload" parameterType="ssg.com.a.dto.PdsDto">
+	insert into pds(id, title, content, filename, newfilename, readcount, downcount, regdate)
+	values (#{id}, #{title}, #{content}, #{filename}, #{newfilename}, 0, 0, now())
+</insert>
+
+<select id="getpds" parameterType="Integer" resultType="ssg.com.a.dto.PdsDto">
+	select seq, id, title, content, filename, newfilename, readcount, downcount, regdate from pds
+	where seq=#{seq}
+</select>
+
+<update id="downloadcount" parameterType="Integer">
+	update pds
+	set downcount=downcount+1
+	where seq=#{seq}
+</update>
+
+</mapper>

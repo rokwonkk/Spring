@@ -61,7 +61,8 @@
 
 	<h2>게시판</h2>
 	<br />
-
+	<a href="pdslist.do">자료실</a>
+	
 	<div class="center">
 
 		<table class="table table-hover">

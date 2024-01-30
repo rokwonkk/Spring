@@ -32,28 +32,43 @@
     <script src="./js/summernote-lite.js"></script>
 	<script src="./js/summernote-ko-KR.js"></script>
 	<link rel="stylesheet" href="./css/summernote-lite.css">
-    
-    <style>
-        .mytable {
-        	margin: auto;
-            width: 800px;
-            border: 1px solid lightgray;
-        }
 
-        th {
-            border: 1px solid lightgray;
-            text-align: center;
-            vertical-align: middle;
-       		
-       		--bs-table-color: white;
-   			--bs-table-bg: royalblue;
-        }
+<style>
+.mytable {
+	margin: auto;
+	width: 800px;
+	border: 1px solid lightgray;
+}
 
-        button {
-        	align: right;
-            /* margin: 0 80px; */
-        }
-    </style>
+th {
+	border: 1px solid lightgray;
+	text-align: center;
+	vertical-align: middle;
+	--bs-table-color: white;
+	--bs-table-bg: royalblue;
+}
+
+button {
+	align: right;
+	/* margin: 0 80px; */
+}
+
+/* 이미지 드래그 무한 증식 막음. */
+img {
+	/* 선택불가 */
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	/* 드래그 불가 */
+	-webkit-user-drag: none;
+	-khtml-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+	user-drag: none;
+}
+</style>
 </head>
 <body>
 
@@ -85,12 +100,15 @@
         </tr>
         <tr>
             <!-- <th>내용</th> -->
-            <td colspan="2"><textarea name="content" class="form-control" cols="50" rows="10"
+            <td colspan="2"><textarea id="summernote" name="content" class="form-control" cols="50" rows="10" contenteditable="false"
                           readonly><%=dto.getContent()%></textarea>
             </td>
         </tr>
+        
+        
     </table>
-    <br/>
+
+   	<br/>
     <%
         if (login != null && login.getId().equals(dto.getId())) {
     %>
@@ -102,7 +120,6 @@
     <button type="button" onclick="answerBbs(<%=dto.getSeq()%>)" class="btn btn-primary">답글작성</button>
 <%--     <button type="button" onclick="commentBbs(<%=dto.getSeq()%>)" class="btn btn-primary">댓글작성</button> --%>
 	<button type="button" class="btn btn-primary" onclick="returnlist()">글목록으로</button>
-
 </div>
 
 <%-- 댓글 --%>
@@ -146,6 +163,14 @@
 
 <script>
 $(document).ready(function(){
+	
+	$('#summernote').summernote('disable');
+	
+	$('.note-view').remove();
+	$('.note-fontname').remove();
+	$('.note-color').remove();
+	$('.note-toolbar').remove();
+	
 	$.ajax({
 		url : "commentList.do",
 		type : "get",

@@ -35,14 +35,16 @@
 		
 		th {
 			border: 1px solid lightgray;
-       		font-size: 30px;
+			vertical-align: middle;
+			text-align: center;
+       		font-size: 15px;
        		
        		--bs-table-color: white;
    			--bs-table-bg: royalblue;
 		}
 		
 		button {
-			margin: 0 20px;			
+			/* margin: 0 20px; */			
 		}
 </style>
 </head>
@@ -63,7 +65,7 @@
             </tr>
             <tr>
                 <!-- <th>제목</th> -->
-                <td colspan="2"><input type="text" class="form-control" name="title" size="50px" placeholder="제목을 작성해주세요"></td>
+                <td colspan="2"><input type="text" class="form-control" id="title" name="title" size="50px" placeholder="제목을 작성해주세요"></td>
             </tr>
             <tr>
                 <!-- <th>내용</th> -->
@@ -72,12 +74,25 @@
             </tr>
         </table>
         <br/>
-        <button type="submit" class="btn btn-primary">글작성완료</button>
+        <button id="bbsWriteSubmit" type="submit" class="btn btn-primary">글작성완료</button>
         <button type="button" class="btn btn-primary" onclick="returnlist()">글목록으로</button>
     </form>
 </div>
+
+<script type="text/javascript">
+	$('#bbsWriteSubmit').click(function(){
+		let title = $('#title').val();
+		
+		if(title.trim() === ''){
+			alert('제목을 입력해주세요');
+			return false;	//전송보류시에는 false를 반환해주면 된다.
+		}
+	});
+</script>
+
 <script>
 $(document).ready(function() {
+	
 	/*
 	&lt;나 &gt;는 웹사이트에 적용시 < > 그대로 출력됩니다.
 	저장할 때 replaceAll으로 변환을 해줬으니 불러올 때도 title.replaceAll("&lt;", "<"); 
@@ -85,19 +100,19 @@ $(document).ready(function() {
 	
 	//여기 아래 부분
 	$('#summernote').summernote({
-		  height: 300,                 // 에디터 높이
-		  minHeight: null,             // 최소 높이
-		  maxHeight: null,             // 최대 높이
-		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-		  lang: "ko-KR",					// 한글 설정
+		  height: 150,              				    // 에디터 높이
+		  minHeight: null,        					    // 최소 높이
+		  maxHeight: null,    					        // 최대 높이
+		  focus: true,           						// 에디터 로딩후 포커스를 맞출지 여부
+		  lang: "ko-KR",								// 한글 설정
 		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
 	});
 	
 	$('.note-view').remove();
 	$('.note-fontname').remove();
 	$('.note-color').remove();
-});
-
+	
+	});
 
 	function returnlist() {
 		location.href = "bbslist.do";
