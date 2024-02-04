@@ -152,6 +152,9 @@ $(document).ready(function(){
 	
 	$('#summernote').summernote('disable');
 
+	$('.note-editable').css('background-color','white');
+	$('.note-toolbar').remove();
+	
 	$('#summernoteanswer').summernote({
 		  height: 150,              				    // 에디터 높이
 		  minHeight: null,        					    // 최소 높이

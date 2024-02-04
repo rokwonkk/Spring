@@ -32,8 +32,12 @@ public class PdsServiceImpl implements PdsService {
 	}
 
 	@Override
-	public boolean downloadCount(int seq) {
-		int count = dao.downloadCount(seq);
-		return count > 0 ? true : false;
+	public void downloadCount(int seq) {
+		dao.downloadCount(seq);
+	}
+
+	@Override
+	public void readCount(int seq) {
+		dao.readCount(seq);
 	}
 }

@@ -36,5 +36,10 @@ public class PdsDaoImpl implements PdsDao {
 	public int downloadCount(int seq) {
 		return session.update(ns + "downloadcount", seq);
 	}
+
+	@Override
+	public int readCount(int seq) {
+		return session.update(ns + "readcount", seq);
+	}
 	
 }

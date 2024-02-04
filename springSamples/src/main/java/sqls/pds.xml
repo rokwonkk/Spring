@@ -25,4 +25,10 @@
 	where seq=#{seq}
 </update>
 
+<update id="readcount" parameterType="Integer">
+	update pds
+	set readcount=readcount+1
+	where seq=#{seq}
+</update>
+
 </mapper>

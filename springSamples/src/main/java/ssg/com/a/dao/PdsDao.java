@@ -13,4 +13,6 @@ public interface PdsDao {
 	PdsDto getPds(int seq);
 	
 	int downloadCount(int seq);
+	
+	int readCount(int seq);
 }

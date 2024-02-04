@@ -12,5 +12,7 @@ public interface PdsService {
 	
 	PdsDto getPds(int seq);
 	
-	boolean downloadCount(int seq);
+	void downloadCount(int seq);
+	
+	void readCount(int seq);
 }

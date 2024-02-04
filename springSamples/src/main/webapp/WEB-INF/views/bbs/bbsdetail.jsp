@@ -68,6 +68,11 @@ img {
 	-o-user-drag: none;
 	user-drag: none;
 }
+
+#summernote {
+	border: 1px solid #eee;
+	color: #000;
+}
 </style>
 </head>
 <body>
@@ -165,10 +170,7 @@ img {
 $(document).ready(function(){
 	
 	$('#summernote').summernote('disable');
-	
-	$('.note-view').remove();
-	$('.note-fontname').remove();
-	$('.note-color').remove();
+	$('.note-editable').css('background-color','white');
 	$('.note-toolbar').remove();
 	
 	$.ajax({
