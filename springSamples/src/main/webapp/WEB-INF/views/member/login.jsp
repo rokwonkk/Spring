@@ -61,21 +61,12 @@
 				</td>
 			</tr>
 		</table>
-		<!-- 네이버아이디로로그인 버튼 노출 영역 -->
-		<div id="naver_id_login">네이버 로그인</div>
 	</form>
+	<br/>
+	<hr/>
+	<br/>
+	<button type="button" onclick="location.href='${url}'">네이버 로그인</button>
 </div>
-
-<!-- //네이버아이디로로그인 버튼 노출 영역 -->
-<script type="text/javascript">
-    var naver_id_login = new naver_id_login("yoXKfaZjwzL4vDVoP2_S", "http://localhost:8080/springSamples/naverloginaf.do");
-    var state = naver_id_login.getUniqState();
-    naver_id_login.setButton("white", 2,40);
-    naver_id_login.setDomain("http://localhost:8080/springSamples/");
-    naver_id_login.setState(state);
-    //naver_id_login.setPopup();
-    naver_id_login.init_naver_id_login();
-</script>
 
 <script type="text/javascript">
 /*
@@ -83,7 +74,7 @@
 	session : server저장, login 정보
 */
 
-var user_id = $.cookie("user_id");						// 쿠키에서 id를 산출
+let user_id = $.cookie("user_id");						// 쿠키에서 id를 산출
 if(user_id != null){									// 쿠키에 저장한 id가 있다
 	$("#id").val( user_id );
 	$("#chk_save_id").prop("checked", true);

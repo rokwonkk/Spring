@@ -34,4 +34,6 @@
 	<!-- spring에서 처리할 수 없는 요청은 tomcat에서 처리 -->
 	<mvc:default-servlet-handler/>          
 		
+	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+	<bean class="ssg.com.a.naverlogin.NaverLoginBo" id="naverLoginBo"/>
 </beans>
