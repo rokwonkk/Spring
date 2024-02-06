@@ -16,4 +16,7 @@
 	select id, name, email, auth from member where id=#{id} and pw=#{pw} 
 </select>
 
+<select id="naverlogin" parameterType="ssg.com.a.dto.MemberDto" resultType="ssg.com.a.dto.MemberDto">
+	select id, name, email, auth from member where email=#{email}
+</select>
 </mapper>

@@ -9,4 +9,6 @@ public interface MemberDao {
 	int addmember(MemberDto dto);
 	
 	MemberDto login(MemberDto dto);
+	
+	MemberDto naverLogin(String email);
 }

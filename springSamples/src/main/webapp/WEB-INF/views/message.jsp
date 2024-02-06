@@ -42,6 +42,26 @@ if(loginMsg != null && loginMsg.equals("") == false){
 	}	
 }
 
+//로그인
+String loginNaverMsg = (String)request.getAttribute("loginNaverMsg");
+if(loginNaverMsg != null && loginNaverMsg.equals("") == false){
+	if(loginNaverMsg.equals("NAVER_LOGIN_SUCCESS")){
+		%>
+		<script type="text/javascript">
+		alert("네이버 아이디로 로그인되었습니다");
+		location.href = "./bbslist.do";
+		</script>
+		<%		
+	}else{
+		%>
+		<script type="text/javascript">
+		alert("네이버 아이디를 확인해 주세요");
+		location.href = "./login.do";
+		</script>
+		<%		
+	}	
+}
+
 // 게시판 글추가
 String bbswriteMsg = (String)request.getAttribute("bbswriteMsg");
 if(bbswriteMsg != null && bbswriteMsg.equals("") == false){

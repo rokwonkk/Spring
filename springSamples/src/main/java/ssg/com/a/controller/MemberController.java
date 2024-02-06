@@ -115,10 +115,11 @@ public class MemberController {
 	//네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "naverloginAf.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String callBackNaver(
-			Model model, 
 			@RequestParam String code, 
 			@RequestParam String state, 
-			HttpSession session) throws Exception {
+			Model model, 
+			HttpSession session,
+			HttpServletRequest req) throws Exception {
 		System.out.println("로그인 성공 콜백");
 		OAuth2AccessToken oauthToken;
 		
@@ -136,6 +137,8 @@ public class MemberController {
 		System.out.println(response_obj);
 		
 		//프로필 조회
+		//유니크아이디
+		String id = (String) response_obj.get("id");
 		//이메일
 		String email = (String) response_obj.get("email");
 		//이름
@@ -155,19 +158,42 @@ public class MemberController {
 		//session.setAttribute("islogin_r", "Y");
 		session.setAttribute("signIn", apiResult);
 		session.setAttribute("email", email);
+		session.setAttribute("id", id);
 		session.setAttribute("name", name);
 		session.setAttribute("gender", gender);
 		session.setAttribute("birthdayFull", birthdayFull);
 		session.setAttribute("nickname", nickname);
 		session.setAttribute("mobile", mobile);
 
+//		MemberDto findNaverId = service.naverLogin(email);
+//		if(findNaverId != null) {
+//			System.out.println("찾았다.");
+//		} else {
+//			System.out.println("못찾았다.");
+//		}
+		
+		MemberDto login = service.naverLogin(email);
+		String loginNaverMsg = "NAVER_LOGIN_FAIL";
+		if(login != null) {											//로그인 성공
+			req.getSession().setAttribute("login", login);			//로그인한 정보 세션에 저장
+//			req.getSession().setMaxInactiveInterval(60 * 60 * 24);
+			loginNaverMsg = "NAVER_LOGIN_SUCCESS";	
+		} else {
+			//여기서 네이버 메일로 가입한 회원이 없을 때 
+			//회원가입이나 로직 추가 해야하는 부분
+		}
+
+		model.addAttribute("loginNaverMsg", loginNaverMsg);
+		return "message";
+		
+		
+//		insert into
+//	    sns_info(id, sns_id, sns_type, sns_name, sns_profile,
+//	    sns_connect_date)
+//	    values (#{id}, #{snsId}, #{snsType}, #{snsName}, #{snsProfile}, now() )
+		
 		
 		/* 네이버 로그인 성공 페이지 View 호출 */
-		return "redirect:/loginSuccess.do";
-	}
-	
-	@RequestMapping("/loginSuccess.do")
-	public String loginSuccess() {
-		return "member/loginSuccess";
+		//return "member/naverlogin";
 	}
 }

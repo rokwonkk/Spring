@@ -29,4 +29,9 @@ public class MemberDaoImpl implements MemberDao {
 	public MemberDto login(MemberDto dto) {
 		return session.selectOne(ns + "login", dto);
 	}
+
+	@Override
+	public MemberDto naverLogin(String email) {
+		return session.selectOne(ns + "naverlogin", email);
+	}
 }

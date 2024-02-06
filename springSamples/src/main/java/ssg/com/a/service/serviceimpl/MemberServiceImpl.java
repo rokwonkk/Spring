@@ -29,4 +29,9 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDto login(MemberDto dto) {
 		return dao.login(dto);
 	}
+
+	@Override
+	public MemberDto naverLogin(String email) {
+		return dao.naverLogin(email);
+	}
 }

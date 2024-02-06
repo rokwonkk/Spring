@@ -20,7 +20,6 @@
   
   <!-- 네이버 로그인 -->
   <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   
   <style>
   	.center {
@@ -65,7 +64,9 @@
 	<br/>
 	<hr/>
 	<br/>
-	<button type="button" onclick="location.href='${url}'">네이버 로그인</button>
+	<button type="button">
+		<img alt="이미지 없음" src="./images/naver_logo.png" style="width: 360px; height: 80px" onclick="location.href='${url}'">
+	</button>
 </div>
 
 <script type="text/javascript">
