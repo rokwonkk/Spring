@@ -1,10 +1,13 @@
 package ssg.com.a.controller;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import net.coobird.thumbnailator.Thumbnails;
 import ssg.com.a.dto.PdsDto;
 import ssg.com.a.service.PdsService;
 import util.PdsUtil;
@@ -86,6 +90,13 @@ public class PdsController {
 			} else {
 				System.out.println("파일업로드 실패");
 			}
+			
+			File thumbnailFile = new File(fupload + "/s_" + newfilename);
+			
+			Thumbnails.of(file)
+			.size(160, 160)
+			.toFile(thumbnailFile);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
