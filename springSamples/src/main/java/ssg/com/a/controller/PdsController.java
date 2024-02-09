@@ -1,6 +1,5 @@
 package ssg.com.a.controller;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,10 +30,11 @@ public class PdsController {
 	PdsService service;
 	
 	@GetMapping("pdslist.do")
-	public String pdsList(Model model) {
+	public String pdsList(Model model, HttpServletRequest req) {
 		System.out.println("PdsController pdsList " + new Date());
 		
 		List<PdsDto> list = service.pdsList();
+		
 		model.addAttribute("list", list);
 		
 		return "pds/pdslist";
@@ -48,7 +48,7 @@ public class PdsController {
 	}
 	
 	@PostMapping("pdsupload.do")
-	public String pdsUpload(PdsDto dto, 
+	public String pdsUpload(PdsDto dto, Model model,
 								@RequestParam(value = "fileupload", required = false)
 								MultipartFile fileupload,
 								HttpServletRequest req) {
@@ -65,8 +65,8 @@ public class PdsController {
 		//tomcat(server)
 		String fupload = req.getServletContext().getRealPath("/upload");
 		
-		//폴더(테스트용)
-//		String fupload = "/Users/rokwon/Desktop";
+		//폴더(테스트용) - 록원스 다이렉트 폴더 경로
+		//String fupload = "/Users/rokwon/Desktop/springframeworksts/springSamples/src/main/webapp/upload";
 		System.out.println("파일업로드 경로: " + fupload);
 		
 		//파일명 변경 abc.txt -> 324234324.txt
@@ -87,21 +87,35 @@ public class PdsController {
 			boolean b = service.pdsupload(dto);
 			if(b) {
 				System.out.println("파일업로드 성공");
+	
+				//확장자명 확인
+				String extcheck = newfilename.substring(newfilename.indexOf('.'));
+
+				//이미지 파일 일 경우 썸네일 파일 만들어줌.
+				if(extcheck.equals(".png") || extcheck.equals(".jpg") || extcheck.equals(".gif") || extcheck.equals(".bmp")) {
+					
+					File thumbnailFile = new File(fupload + "/s_" + newfilename);
+					
+					System.out.println("썸네일 경로 및 파일명 : " + thumbnailFile);
+					
+					//파일 업로드 성공시에 썸네일 파일 생성
+					Thumbnails.of(file)
+					//.size(width, height)
+					.size(120, 120)
+					.toFile(thumbnailFile);
+				}
 			} else {
+				
 				System.out.println("파일업로드 실패");
+				
 			}
-			
-			File thumbnailFile = new File(fupload + "/s_" + newfilename);
-			
-			Thumbnails.of(file)
-			.size(160, 160)
-			.toFile(thumbnailFile);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		return "redirect:/pdslist.do";
+		//return "pds/pdslist";
 	}
 	
 	@GetMapping("pdsdetail.do")
