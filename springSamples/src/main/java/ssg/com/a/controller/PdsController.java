@@ -1,12 +1,10 @@
 package ssg.com.a.controller;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
@@ -134,7 +132,6 @@ public class PdsController {
 	public String filedownload(int seq, String newfilename, String filename, Model model, HttpServletRequest req) {
 		System.out.println("PdsController filedownload " + new Date());
 		
-		//경로 
 		//tomcat
 		String fupload = req.getServletContext().getRealPath("/upload");
 		
