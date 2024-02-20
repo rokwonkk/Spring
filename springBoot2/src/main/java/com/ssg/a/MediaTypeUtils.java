@@ -10,14 +10,14 @@ public class MediaTypeUtils {
 		
 		String mimType = sc.getMimeType(filename);
 		
-		MediaType mediaType = MediaType.parseMediaType(mimType);
-		return mediaType;
-//		
-//		try {
-//			MediaType mediaType = MediaType.parseMediaType(mimType);
-//			return mediaType;
-//		} catch (Exception e) {
-//			return MediaType.APPLICATION_OCTET_STREAM;
-//		}			
+//		MediaType mediaType = MediaType.parseMediaType(mimType);
+//		return mediaType;
+		
+		try {
+			MediaType mediaType = MediaType.parseMediaType(mimType);
+			return mediaType;
+		} catch (Exception e) {
+			return MediaType.APPLICATION_OCTET_STREAM;
+		}			
 	}
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.ssg.a.dao.MemberDao">
+
+<select id="allMember" resultType="com.ssg.a.dto.MemberDto">
+	select * 
+	from member
+</select>
+
+<select id="login" parameterType="com.ssg.a.dto.MemberDto" resultType="com.ssg.a.dto.MemberDto" >
+	select id, name, email, auth from member
+	where id=#{id} and pw = #{pw}
+</select>
+
+<insert id="addMember" parameterType="com.ssg.a.dto.MemberDto">
+	insert into member(id, pw, name, email, auth) values (#{id}, #{pw}, #{name}, #{email}, 3);
+</insert>
+
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.ssg.a.dao.MemberDao">
+
+<!-- idcheck -->
+<select id="idcheck" parameterType="String" resultType="Integer">
+	select count(*) from member where id=#{id}
+</select>
+
+<!-- regi -->
+<insert id="addMember" parameterType="com.ssg.a.dto.MemberDto">
+	insert into member values (#{id}, #{pw}, #{name}, #{email}, 3)
+</insert>
+
+<!-- login -->
+<select id="login" parameterType="com.ssg.a.dto.MemberDto" resultType="com.ssg.a.dto.MemberDto">
+	select id, name, email, auth from member where id=#{id} and pw=#{pw} 
+</select>
+
+</mapper>
