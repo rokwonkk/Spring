@@ -66,4 +66,48 @@
 	where seq=#{seq}
 </update>
 
+<!-- 조회수 중복 아이디 체크 -->
+<select id="getReadCountId" parameterType="com.ssg.a.dto.ReadCountDto" resultType="java.lang.Integer">
+	select count(*)
+	from readcount
+	where id=#{id} and category='bbs' and checkseq=#{checkseq}
+</select>
+
+<!-- 조회수 중복 아이디 추가  -->
+<insert id="insertCheckReadCountId" parameterType="com.ssg.a.dto.ReadCountDto">
+insert into readcount (id, category, checkseq)
+values (#{id}, 'bbs', #{checkseq});
+</insert>
+
+<!-- 조회수 -->
+<update id="readCount" parameterType="Integer">
+	update bbs
+	set readcount=readcount+1
+	where seq=#{seq}
+</update>
+
+<!-- 답글 -->
+<insert id="writeAnswer" parameterType="com.ssg.a.dto.BbsDto">
+	insert into bbs( id, ref, step, depth, title, content, wdate, del, readcount)
+	values ( 
+	#{id}, 
+	(select ref from bbs a where seq=#{seq}),
+	(select step from bbs b where seq=#{seq}) + 1,
+	(select depth from bbs c where seq=#{seq}) + 1,
+	#{title}, #{content}, now(), 0, 0
+	)
+</insert>
+
+<!-- 댓글 -->
+<!-- 댓글 추가 -->
+<insert id="commentWrite" parameterType="com.ssg.a.dto.BbsComment">
+	insert into bbscomment(seq, id, content, wdate) values (#{seq}, #{id}, #{content}, now())
+</insert>
+
+<!-- 댓글 목록 -->
+<select id="commentList" parameterType="Integer" resultType="com.ssg.a.dto.BbsComment">
+	select seq, id, content, wdate from bbscomment
+	where seq=#{seq}
+	order by wdate desc
+</select>
 </mapper>

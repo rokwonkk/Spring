@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.ssg.a.dao.PdsDao">
+
+<!-- 자료실글의 총수 -->
+<select id="getAllPds" parameterType="com.ssg.a.dto.BbsParam" resultType="java.lang.Integer">
+   select count(*) 
+   from pds
+   <if test="choice != null and choice != '' and search != null and search != '' ">
+      <if test="choice == 'title'">
+         where title like concat('%', #{search}, '%')
+      </if>
+      <if test="choice == 'content'">
+         where content like concat('%', #{search}, '%')
+      </if>
+      <if test="choice == 'writer'">
+         where id=#{search}
+      </if>   
+   </if>
+</select>
+
+<select id="pdsList" parameterType="com.ssg.a.dto.BbsParam" resultType="com.ssg.a.dto.PdsDto">
+	select seq, id, title, content, filename, newfilename, readcount, downcount, regdate 
+	from pds
+		<if test="choice != null and choice != '' and search != null and search != ''">
+		<if test="choice =='title'">
+			where title like concat('%', #{search}, '%')
+		</if>
+		<if test="choice =='content'">
+			where content like concat('%', #{search}, '%')
+		</if>
+		<if test="choice =='writer'">
+			where id=#{search}
+		</if>
+	</if>
+	order by regdate desc
+	limit ${(pageNumber * 10)}, 10
+</select>
+
+<select id="getPds" parameterType="Integer" resultType="com.ssg.a.dto.PdsDto">
+	select seq, id, title, content, filename, newfilename, readcount, downcount, regdate from pds
+	where seq=#{seq}
+</select>
+
+</mapper>

@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssg.a.dto.BbsComment;
 import com.ssg.a.dto.BbsDto;
 import com.ssg.a.dto.BbsParam;
+import com.ssg.a.dto.ReadCountDto;
 import com.ssg.a.service.BbsService;
 
 @RestController
@@ -56,9 +58,26 @@ public class BbsController {
 	
 	@GetMapping("bbsdetail")
 	public BbsDto bbsDetail(
+			@RequestParam String id,
 			@RequestParam int seq) {
 		System.out.println("BbsController bbsDetail() " + new Date());
 		
+		ReadCountDto dto = new ReadCountDto(id, seq);
+		
+//		System.out.println(dto.toString());
+		
+		int findId = service.getReadCountId(dto);
+		
+		//System.out.println(findId);
+		
+		if(findId == 0) {
+			//중복 테이블에 아이디 값 insert
+			service.insertCheckReadCountId(dto);
+			
+			//조회수 증가
+			service.readCount(seq);
+		}
+
 		return service.getBbs(seq);
 	}
 	
@@ -84,6 +103,43 @@ public class BbsController {
 		if(!b) {
 			return "fail";
 		}
+		return "success";
+	}
+	
+	@GetMapping("writeanswer")
+	public String writeanser(BbsDto dto) {
+		System.out.println("BbsController writeanser() " + new Date());
+		
+		boolean b = service.writeAnswer(dto);
+		
+		if(!b) {
+			return "fail";
+		}
+		return "success";
+	}
+	
+	@GetMapping("commentlist")
+	public Map<String, Object> bbsCommentList(BbsComment com) {
+		System.out.println("BbsController bbsCommentList() " + new Date());
+
+		List<BbsComment> list = service.commentList(com);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	@GetMapping("commentwrite")
+	public String bbsCommentWrite(BbsComment com) {
+		System.out.println("BbsController bbsCommentWrite() " + new Date());
+		
+		boolean b = service.commentWrite(com);
+		
+		if(!b) {
+			return "fail";
+		}
+		
 		return "success";
 	}
 }
