@@ -28,4 +28,8 @@ public class PdsService {
 	public PdsDto getPds(PdsDto dto) {
 		return dao.getPds(dto);
 	}
+	
+	public boolean writePds(PdsDto dto) {
+		return dao.writePds(dto) > 0 ? true : false;
+	}
 }

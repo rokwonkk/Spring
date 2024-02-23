@@ -22,7 +22,7 @@
 </select>
 
 <select id="pdsList" parameterType="com.ssg.a.dto.BbsParam" resultType="com.ssg.a.dto.PdsDto">
-	select seq, id, title, content, filename, newfilename, readcount, downcount, regdate 
+	select seq, id, title, content, filename, newfilename, readcount, downcount, DATE_FORMAT(regdate,'%Y-%m-%d %H:%m') regdate 
 	from pds
 		<if test="choice != null and choice != '' and search != null and search != ''">
 		<if test="choice =='title'">
@@ -35,13 +35,19 @@
 			where id=#{search}
 		</if>
 	</if>
-	order by regdate desc
+	order by seq desc, regdate desc
 	limit ${(pageNumber * 10)}, 10
 </select>
 
 <select id="getPds" parameterType="Integer" resultType="com.ssg.a.dto.PdsDto">
-	select seq, id, title, content, filename, newfilename, readcount, downcount, regdate from pds
+	select seq, id, title, content, filename, newfilename, readcount, downcount, DATE_FORMAT(regdate,'%Y-%m-%d %H:%m') regdate
+	 from pds
 	where seq=#{seq}
 </select>
+
+<insert id="writePds" parameterType="com.ssg.a.dto.PdsDto">
+	insert into pds(id, title, content, filename, newfilename, readcount, downcount, regdate)
+	values (#{id}, #{title}, #{content}, #{filename}, #{newfilename}, 0, 0, now())
+</insert>
 
 </mapper>

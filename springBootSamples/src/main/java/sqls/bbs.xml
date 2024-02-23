@@ -23,7 +23,7 @@
 	limit ${(pageNumber * 10)}, 10
 </select>
 
-<!-- 글을 총수 -->
+<!-- 글의 총수 -->
 <select id="getAllBbs" parameterType="com.ssg.a.dto.BbsParam" resultType="java.lang.Integer">
    select count(*) 
    from bbs

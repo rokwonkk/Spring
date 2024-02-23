@@ -17,4 +17,6 @@ public interface PdsDao {
 	List<PdsDto> pdsList(BbsParam param);
 	
 	PdsDto getPds(PdsDto dto);
+	
+	int writePds(PdsDto dto);
 }
