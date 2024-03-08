@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssg.a.MediaTypeUtils;
-import com.ssg.a.PdsDto;
+import com.ssg.a.dto.PdsDto;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ssg.com.a.dto.HumanDto;
@@ -16,6 +17,8 @@ public class HelloController {
 
 	@GetMapping("idcheck")
 	public String idcheck(String id){
+		System.out.println("HelloController hello() " + new Date());
+		System.out.println("id : " + id);
 		return "예";
 	}	
 	
@@ -58,9 +61,10 @@ public class HelloController {
 		return "성공!";
 	}
 	
-	@GetMapping("getlist")
-	public List<HumanDto> getlist(){
+	@PostMapping("getlist")
+	public List<HumanDto> getlist(HumanDto dto){
 		System.out.println("HelloController getlist() " + new Date());
+		System.out.println(dto.toString());
 		
 		List<HumanDto> list = new ArrayList<HumanDto>();
 		list.add(new HumanDto("aaa", "안녕", 111.11));

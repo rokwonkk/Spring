@@ -39,7 +39,8 @@ public class BbsController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
-		map.put("pageBbs", pageBbs);
+		map.put("pageBbs", pageBbs); //리액트에선 필요없음. jquery를 사용하지 않기때문klxxp
+		map.put("cnt", count);
 		
 		return map;
 	}
@@ -77,6 +78,14 @@ public class BbsController {
 			//조회수 증가
 			service.readCount(seq);
 		}
+
+		return service.getBbs(seq);
+	}
+	
+	@GetMapping("bbsdetail2")
+	public BbsDto bbsDetail2(
+			@RequestParam int seq) {
+		System.out.println("BbsController bbsDetail2() " + new Date());
 
 		return service.getBbs(seq);
 	}

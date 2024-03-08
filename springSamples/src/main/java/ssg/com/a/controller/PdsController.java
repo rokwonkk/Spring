@@ -40,15 +40,14 @@ public class PdsController {
 	
 	@GetMapping("pdswrite.do")
 	public String pdsWrite() {
-		System.out.println("PdsController pdswrite " + new Date());
+		System.out.println("PdsController pdswrite() " + new Date());
 		
 		return "pds/pdswrite";
 	}
 	
 	@PostMapping("pdsupload.do")
-	public String pdsUpload(PdsDto dto, Model model,
-								@RequestParam(value = "fileupload", required = false)
-								MultipartFile fileupload,
+	public String pdsUpload(PdsDto dto,
+								@RequestParam(value = "fileupload", required = false) MultipartFile fileupload,
 								HttpServletRequest req) {
 		System.out.println("PdsController pdsUpload " + new Date());
 		

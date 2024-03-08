@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Query -->
+<mapper namespace="mybatis.mapper">
+
+	<!-- insert, delete, update 는 기본 return 값이 int <insert id="외부에서 접근할 문자열" 
+		parameterType="Object(java.lang.String)"> 쿼리문 insert into ... </insert> <update> 
+		.. .. </update> <delete> .. .. </delete> <select id="외부에서 접근할 문자열" parameterType="Object" 
+		<- 외부로부터 들어오는 값 resultType="Object"> <- return value 쿼리문 select id, name, 
+		height from member where id=#{변수명(값)} <- #{문자열} ${숫자} </select> -->
+
+	<insert id="addmember" parameterType="dto.MemberDto">
+		insert into member(id, pw,
+		name, email, auth) values (#{id}, #{pw}, #{name},
+		#{email}, 3)
+	</insert>
+
+	<!-- 1개의 로우 warper class는 앞에 생략가능 -->
+	<select id="getmember" parameterType="String"
+		resultType="dto.MemberDto">
+		select id, pw, name, email, auth from member
+		where id=#{id}
+	</select>
+
+	<!-- 다수의 rows -->
+	<select id="allmember" resultType="dto.MemberDto">
+		select id, pw, name, email,
+		auth from member
+	</select>
+
+	<delete id="delmember" parameterType="dto.MemberDto">
+		delete from member
+		where
+		id=#{id}
+	</delete>
+
+	<update id="updatemember" parameterType="dto.MemberDto">
+		update member
+		set name=#{name}
+		where id=#{id}
+	</update>
+
+	<!-- <if test="조건"> 쿼리 </if> <if test="조건"> 쿼리 </if> <choose> <when test="조건"> 
+		쿼리문 </when> <when test="조건"> 쿼리문 </when> </choose> -->
+
+	<!-- <select id="bbssearch" parameterType="dto.BbsParam" resultType="dto.BbsDto"> 
+		select seq, id, ref, step, depth, title, content, wdate, del, readcount from 
+		bbs <if test="choice != null and choice != '' and search != null"> <if test="choice 
+		== 'title'"> where title like concat('%',#{search},'%') </if> <if test="choice 
+		== 'content'"> where content like concat('%',#{search},'%') </if> <if test="choice 
+		== 'writer'"> where id=#{search} </if> </if> </select> -->
+
+	<select id="bbssearch" parameterType="dto.BbsParam"
+		resultType="dto.BbsDto">
+		select seq, id, ref, step, depth, title, content, wdate,
+		del, readcount
+		from bbs
+		<if test="choice != null and choice != '' and search != null">
+			<choose>
+				<when test="choice == 'title'">
+					where title like concat('%',#{search},'%')
+				</when>
+				<when test="choice == 'content'">
+					where content like concat('%',#{search},'%')
+				</when>
+				<when test="choice == 'writer'">
+					where id=#{search}
+				</when>
+			</choose>
+		</if>
+	</select>
+</mapper>
+
+
+
+
+
+
+

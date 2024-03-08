@@ -58,6 +58,7 @@ public class PdsContorller {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("pagePds", pagePds);
+		map.put("cnt", count);
 		
 		return map;
 	}
@@ -71,7 +72,7 @@ public class PdsContorller {
 
 	@PostMapping("pdswrite")
 	public String pdsWrite(PdsDto dto,
-								@RequestParam(value = "fileupload", required = false) MultipartFile uploadfile,
+								@RequestParam(value = "uploadfile", required = false) MultipartFile uploadfile,
 								HttpServletRequest req) {
 		System.out.println("PdsController pdsUpload " + new Date());
 

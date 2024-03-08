@@ -143,7 +143,6 @@
 			alert('제목을 입력해주세요');
 			return false;	//전송보류시에는 false를 반환해주면 된다.
 		}
-		
 	});
 </script>
 

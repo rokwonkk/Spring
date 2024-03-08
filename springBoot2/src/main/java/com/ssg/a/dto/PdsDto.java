@@ -1,4 +1,4 @@
-package com.ssg.a;
+package com.ssg.a.dto;
 
 public class PdsDto {
 
